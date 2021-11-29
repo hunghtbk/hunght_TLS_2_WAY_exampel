@@ -1,0 +1,21 @@
+# Server certificate and key generation method
+I----Generate server key and certificate to be signed directly
+# If you want to read the private key file later server_rsa_private.pem If you do not need to enter a password, that is, do not encrypt the private key-passout pass:server replace with-nodes
+openssl req -newkey rsa:2048 -passout pass:server -keyout server_rsa_private.pem  -out server.csr -subj "/C=CN/ST=GD/L=SZ/O=COM/OU=NSP/CN=SERVER/emailAddress=youremail@qq.com"
+
+=> openssl req -newkey rsa:2048 -nodes -keyout server_rsa_private.pem -out server.csr -subj "/C=CN/ST=GD/L=SZ/O=COM/OU=NSP/CN=SERVER/emailAddress=hunght.thaibinh@gmail.com"
+
+# Server certificate and key generation method
+II----Generate server key and certificate to be signed step by step
+# openssl genrsa -aes256 -passout pass:server -out server_rsa_private.pem 2048
+# openssl req -new -key server_rsa_private.pem -passin pass:server -out server.csr -subj "/C=CN/ST=GD/L=SZ/O=COM/OU=NSP/CN=SERVER/emailAddress=youremail@qq.com"
+# Use CA certificate and key to sign server certificate:
+
+openssl x509 -req -days 365 -in server.csr -CA ca.crt -CAkey ca_rsa_private.pem -passin pass:123456 -CAcreateserial -out server.crt
+
+
+=> openssl x509 -req -days 365 -in server.csr -CA ca.crt -CAkey ca_rsa_private.pem -CAcreateserial -out server.crt
+
+# Convert the encrypted RSA key to the unencrypted RSA key, so as to avoid requiring the input of decryption password every time reading
+# Password is the passout set when generating the private key file and the passin to be entered when reading the private key file. For example, enter "server" here
+openssl rsa -in server_rsa_private.pem -out server_rsa_private.pem.unsecure

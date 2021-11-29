@@ -1,0 +1,11 @@
+# CA Certificate and key generation method I----Direct generation CA Key and its self signed certificate
+# If you want to read the private key file later ca_rsa_private.pem If you do not need to enter a password,
+that is, do not encrypt the private key-passout pass:123456 replace with-nodes
+openssl req -newkey rsa:2048 -passout pass:123456 -keyout ca_rsa_private.pem -x509 -days 365 -out ca.crt -subj "/C=CN/ST=GD/L=SZ/O=COM/OU=NSP/CN=CA/emailAddress=youremail@qq.com"
+
+=> openssl req -newkey rsa:2048 -nodes -keyout ca_rsa_private.pem -x509 -days 365 -out ca.crt -subj "/C=CN/ST=GD/L=SZ/O=COM/OU=NSP/CN=CA/emailAddress=hunght.thaibinh@gmail.com"
+
+# CA Certificate and key generation method
+II----Step by step generation CA Key and its self signed certificate:
+# openssl genrsa -aes256 -passout pass:123456 -out ca_rsa_private.pem 2048
+# openssl req -new -x509 -days 365 -key ca_rsa_private.pem -passin pass:123456 -out ca.crt -subj "/C=CN/ST=GD/L=SZ/O=COM/OU=NSP/CN=CA/emailAddress=youremail@qq.com"
